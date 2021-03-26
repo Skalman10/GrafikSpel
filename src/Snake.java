@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 public class Snake extends Canvas implements Runnable {
     private int width = 680;
@@ -16,12 +18,13 @@ public class Snake extends Canvas implements Runnable {
         frame.add(this);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addKeyListener(new KL());
         frame.setVisible(true);
 
         snakeX = 100;
         snakeY = 100;
-        snakeVX = 10;
-        snakeVY = 10;
+        snakeVX = 0;
+        snakeVY = 0;
     }
     public void update() {
         snakeX += snakeVX;
@@ -35,7 +38,6 @@ public class Snake extends Canvas implements Runnable {
         }
         Graphics g = bs.getDrawGraphics();
 
-        update();
         g.setColor(Color.GREEN);
         g.fillRect(0,0,width,height);
         drawSnake(g,snakeX,snakeY);
@@ -83,5 +85,36 @@ public class Snake extends Canvas implements Runnable {
 
         }
         stop();
+    }
+    private class KL implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent keyEvent) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent keyEvent) {
+            if (keyEvent.getKeyChar() == 'a') {
+                snakeVX = -5;
+                snakeVY = 0;
+            }
+            if (keyEvent.getKeyChar() == 'd') {
+                snakeVX = 5;
+                snakeVY = 0;
+            }
+            if (keyEvent.getKeyChar() == 'w') {
+                snakeVY = -5;
+                snakeVX = 0;
+            }
+            if (keyEvent.getKeyChar() == 's') {
+                snakeVY = 5;
+                snakeVX = 0;
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+
+        }
     }
 }
