@@ -10,7 +10,8 @@ public class Snake extends Canvas implements Runnable {
     private BufferStrategy bs;
     private boolean isRunning;
     private int fps = 30;
-    private int snakeX,snakeY,snakeVX,snakeVY;
+    private int snakeX,snakeY,snakeVX,snakeVY,appleX,appleY;
+
 
     public Snake() {
         JFrame frame = new JFrame("SNAKE");
@@ -25,6 +26,8 @@ public class Snake extends Canvas implements Runnable {
         snakeY = 100;
         snakeVX = 0;
         snakeVY = 0;
+        appleX = 300;
+        appleY = 300;
     }
     public void update() {
         snakeX += snakeVX;
@@ -41,13 +44,19 @@ public class Snake extends Canvas implements Runnable {
         g.setColor(Color.GREEN);
         g.fillRect(0,0,width,height);
         drawSnake(g,snakeX,snakeY);
+        drawApple(g,appleX,appleY);
         g.dispose();
         bs.show();
     }
 
+    private void drawApple(Graphics g, int x, int y) {
+        g.setColor(new Color(128,40,80));
+        g.fillRect(40+x,40+y,20,20);
+    }
+
     private void drawSnake(Graphics g, int x, int y) {
         g.setColor(new Color(0,128,0));
-        g.fillRect(40+x,40+y,40,40);
+        g.fillRect(x,y,40,40);
     }
 
     public static void main(String[] args) {
